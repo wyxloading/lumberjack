@@ -66,7 +66,7 @@ func (p *rotateFilePattern) OldLogFiles(name, dir string) ([]*LogInfo, error) {
 		// by lumberjack, and therefore it's not a backup file.
 	}
 
-	sort.Sort(byFormatTime(logFiles))
+	sort.Sort(ByFormatTime(logFiles))
 
 	return logFiles, nil
 }
@@ -102,16 +102,16 @@ type LogInfo struct {
 }
 
 // byFormatTime sorts by newest time formatted in the name.
-type byFormatTime []*LogInfo
+type ByFormatTime []*LogInfo
 
-func (b byFormatTime) Less(i, j int) bool {
+func (b ByFormatTime) Less(i, j int) bool {
 	return b[i].Timestamp.After(b[j].Timestamp)
 }
 
-func (b byFormatTime) Swap(i, j int) {
+func (b ByFormatTime) Swap(i, j int) {
 	b[i], b[j] = b[j], b[i]
 }
 
-func (b byFormatTime) Len() int {
+func (b ByFormatTime) Len() int {
 	return len(b)
 }
